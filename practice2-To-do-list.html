@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to do list</title>
+    <style>
+        .container {
+            background-color: aquamarine;
+            height: 500px;
+            width: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .input {
+            padding: 5px;
+            border-radius: 5px;
+            height: 25px;
+            width: 300px;
+        }
+
+        .add {
+            padding: 5px;
+            color: antiquewhite;
+            background-color: blue;
+            padding: 5px;
+            height: 35px;
+            width: 55px;
+            border-radius: 5px;
+        }
+
+        .tasklist li {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            background-color: white;
+            border-radius: 10px;
+            height: 35px;
+            width: 350px;
+            font: 600;
+            font-weight: 25px;
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            margin-left: auto;
+        }
+
+        .delete-btn {
+            color: white;
+            background-color: red;
+            padding: 5px;
+            height: 30px;
+            width: 50px;
+            margin-left: auto;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .delete-btn:hover {
+
+            background-color: rgb(184, 32, 32);
+
+        }
+
+        .check-box {
+            border-radius: 50%;
+            height: 15px;
+            width: 15px;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+        .edit {
+            color: white;
+            background-color: gold;
+            padding: 5px;
+            height: 30px;
+            width: 50px;
+            margin-left: auto;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .edit:hover {
+            background-color: rgb(207, 184, 50);
+        }
+
+        .grp-btn {
+            display: flex;
+            margin-left: auto;
+            gap: 5px;
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>To-Do-List</h1>
+
+        <div class="writetasks">
+
+            <input type="text" class="input">
+            <button class="add">Add</button>
+        </div>
+        <ul class="tasklist"></ul>
+    </div>
+
+
+
+
+
+    <script>
+        let ADD_button = document.querySelector('.add');
+        let Input = document.querySelector('.input');
+        let taskList = document.querySelector('.tasklist');
+        let currenttask = null;
+
+
+        function Addtask() {
+
+            let li = document.createElement("li");
+            let Delete_button = document.createElement("button");
+            let Check_box = document.createElement("input");
+            let Edit_button = document.createElement("button");
+            let group_Button = document.createElement("div");
+            let span = document.createElement("span");
+
+
+            if (Input.value.trim() == "") {
+                alert('Fill any task');
+                return;
+            }
+
+            if (currenttask) {
+                currenttask.textContent = Input.value;
+                currenttask = null;
+                Input.value="";
+                ADD_button.textContent="Add";
+                return;
+            }
+
+
+            li.appendChild(span);
+            span.textContent = Input.value;
+            taskList.appendChild(li);
+
+
+            li.prepend(Check_box);
+            Check_box.classList.add("check-box");
+            Check_box.type = "checkbox";
+
+            Check_box.addEventListener("change", function () {
+
+                li.classList.toggle("completed");
+            })
+
+
+            li.appendChild(group_Button);
+            group_Button.classList.add("grp-btn");
+            group_Button.appendChild(Edit_button);
+            group_Button.appendChild(Delete_button);
+
+
+
+
+
+            Delete_button.classList.add("delete-btn")
+            Delete_button.textContent = "Delete";
+
+            Delete_button.addEventListener('click', function () {
+
+                li.remove();
+            })
+
+            Edit_button.textContent = "Edit";
+            Edit_button.classList.add("edit");
+
+            Edit_button.addEventListener('click', function () {
+
+
+                Input.value = span.textContent;
+                ADD_button.textContent = "Update";
+                currenttask = span;
+                
+            })
+            Input.value = "";
+            
+        }
+        
+            
+        ADD_button.addEventListener('click', Addtask);
+
+
+    </script>
+</body>
+
+</html>
